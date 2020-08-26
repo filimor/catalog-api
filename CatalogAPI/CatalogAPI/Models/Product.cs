@@ -11,5 +11,7 @@ namespace CatalogAPI.Models
         public string ImageUrl { get; set; }
         public float Stock { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public Category Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }
