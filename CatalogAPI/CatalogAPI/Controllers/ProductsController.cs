@@ -39,5 +39,34 @@ namespace CatalogAPI.Controllers
             return new CreatedAtRouteResult("GetProduct",
                 new { id = product.Id }, product);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody] Product product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Product> Delete(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+            return product;
+        }
+
     }
 }
