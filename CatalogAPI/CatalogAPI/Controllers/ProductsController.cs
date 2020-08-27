@@ -1,9 +1,9 @@
-﻿using CatalogAPI.Context;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CatalogAPI.Context;
 using CatalogAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CatalogAPI.Controllers
 {
@@ -28,7 +28,7 @@ namespace CatalogAPI.Controllers
         public ActionResult<Product> Get(int id)
         {
             var product = _context.Products.AsNoTracking().FirstOrDefault(p => p.Id == id);
-            return product ?? (ActionResult<Product>)NotFound();
+            return product ?? (ActionResult<Product>) NotFound();
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace CatalogAPI.Controllers
             _context.Products.Add(product);
             _context.SaveChanges();
             return new CreatedAtRouteResult("GetProduct",
-                new { id = product.Id }, product);
+                new {id = product.Id}, product);
         }
 
         [HttpPut("{id}")]
@@ -67,6 +67,5 @@ namespace CatalogAPI.Controllers
             _context.SaveChanges();
             return product;
         }
-
     }
 }
