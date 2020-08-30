@@ -1,13 +1,18 @@
-﻿using System;
+﻿using CatalogAPI.Validations;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CatalogAPI.Models
 {
-    public class Product
+    public class Product : IValidatableObject
     {
         public int Id { get; set; }
 
-        [Required] [MaxLength(80)] public string Name { get; set; }
+        [Required]
+        [MaxLength(80)]
+        [NameValidation]
+        public string Name { get; set; }
 
         [Required] [MaxLength(300)] public string Description { get; set; }
 
@@ -19,5 +24,13 @@ namespace CatalogAPI.Models
         public DateTime RegistrationDate { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Stock <= 0)
+            {
+                yield return new ValidationResult("O estoque deve ser maior do que zero", new[] { nameof(Stock) });
+            }
+        }
     }
 }

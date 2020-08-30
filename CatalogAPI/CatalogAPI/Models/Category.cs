@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using CatalogAPI.Validations;
 
 namespace CatalogAPI.Models
 {
@@ -13,7 +14,10 @@ namespace CatalogAPI.Models
 
         public int Id { get; set; }
 
-        [Required] [MaxLength(80)] public string Name { get; set; }
+        [Required]
+        [MaxLength(80)]
+        [NameValidation]
+        public string Name { get; set; }
 
         [Required] [MaxLength(300)] public string ImageUrl { get; set; }
 
