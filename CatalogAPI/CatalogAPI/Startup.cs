@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using CatalogAPI.Context;
+using CatalogAPI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +21,10 @@ namespace CatalogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<LoggingFilter>();
             services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-                //.AddJsonOptions(options=>options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

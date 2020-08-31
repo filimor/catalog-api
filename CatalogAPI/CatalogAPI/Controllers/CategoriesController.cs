@@ -1,9 +1,10 @@
-﻿using CatalogAPI.Context;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CatalogAPI.Context;
+using CatalogAPI.Filters;
 using CatalogAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CatalogAPI.Controllers
 {
@@ -19,6 +20,7 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(LoggingFilter))]
         public ActionResult<IEnumerable<Category>> Get()
         {
             return _context.Categories.AsNoTracking().ToList();
@@ -34,7 +36,7 @@ namespace CatalogAPI.Controllers
         public ActionResult<Category> Get(int id)
         {
             var category = _context.Categories.AsNoTracking().FirstOrDefault(c => c.Id == id);
-            return category ?? (ActionResult<Category>)NotFound();
+            return category ?? (ActionResult<Category>) NotFound();
         }
 
         [HttpPost]
@@ -42,7 +44,7 @@ namespace CatalogAPI.Controllers
         {
             _context.Categories.Add(category);
             _context.SaveChanges();
-            return new CreatedAtRouteResult("GetCategory", new { id = category.Id }, category);
+            return new CreatedAtRouteResult("GetCategory", new {id = category.Id}, category);
         }
 
         [HttpPut("{id}")]
