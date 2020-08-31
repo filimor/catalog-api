@@ -1,4 +1,5 @@
 using CatalogAPI.Context;
+using CatalogAPI.Extensions;
 using CatalogAPI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace CatalogAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.ConfigureExceptionHandler();
             }
 
             app.UseHttpsRedirection();
